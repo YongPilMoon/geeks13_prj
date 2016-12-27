@@ -13,7 +13,7 @@ def index():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    error = None
+    error = None가
     if request.method == 'POST':
         user = User.query.filter_by(username=request.form['username']).first()
         if user is not None and user.check_password(request.form['password']):
@@ -25,3 +25,14 @@ def login():
     return render_template('login.html', error=error)
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User(form.username.data, form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Thanks for registering')
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
