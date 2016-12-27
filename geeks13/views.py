@@ -1,10 +1,27 @@
-from geeks13 import app
-from flask import render_template
+from flask import render_template, request, flash, session, redirect, url_for
 
-from geeks13.models import Post
+from geeks13 import app, db
+from geeks13.forms import RegistrationForm
+from geeks13.models import Post, User
 
 
 @app.route('/')
 def index():
     posts = Post.query.all()
     return render_template('index.html', posts=posts)
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    error = None
+    if request.method == 'POST':
+        user = User.query.filter_by(username=request.form['username']).first()
+        if user is not None and user.check_password(request.form['password']):
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('index'))
+        else:
+            error = 'Invalid username or password'
+    return render_template('login.html', error=error)
+
+
