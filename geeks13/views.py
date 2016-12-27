@@ -13,7 +13,7 @@ def index():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    error = None가
+    error = None
     if request.method == 'POST':
         user = User.query.filter_by(username=request.form['username']).first()
         if user is not None and user.check_password(request.form['password']):
