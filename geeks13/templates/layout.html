@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Geeks13</title>
+</head>
+<body>
+    <nav>
+        <a href="#"><div>GEEKS13</div></a>
+        <ul>
+            <li><a href="#">DJANGO</a></li>
+            <li><a href="#">FLASK</a></li>
+        </ul>
+    </nav>
+    {% for message in get_flashed_messages() %}
+        <div>{{ message }}</div>
+    {% endfor %}
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
