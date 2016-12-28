@@ -1,18 +1,13 @@
-import os
-
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
-SECRET_KEY = 'development key'
+from .config import configure_app
+from .models import db
 
 app = Flask(__name__)
-app.config.from_object(__name__)
+configure_app(app)
+db.init_app(app)
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATABASE = os.path.join(BASE_DIR, 'geeks13.db')
-app.config['SQLALCHEMY_DATABASE_URI']= 'sqlite:///'+DATABASE
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+with app.app_context():
+    db.create_all()
 
-from geeks13 import views
-from geeks13 import models
+from .views import *
