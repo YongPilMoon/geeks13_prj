@@ -1,7 +1,7 @@
 from flask import Flask
 
-from .config import configure_app
-from .models import db
+from geeks13.config import configure_app
+from geeks13.models import db
 
 app = Flask(__name__)
 configure_app(app)

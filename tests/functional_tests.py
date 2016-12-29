@@ -15,8 +15,8 @@ class NewVisitorTest(unittest.TestCase):
 
         # 웹 페이지 타이틀 헤더가 'Geeks13'을 표시하고 있다
         self.assertIn('Geeks13', self.browser.title)
-        self.fail('Finish the test!')
-        # 그녀는 글을 작성하기 위해 회원가입 페이지로 이동한다
 
+        # 그녀는 글을 작성하기 위해 회원가입 페이지로 이동한다
+        self.fail('Finish the test!')
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
