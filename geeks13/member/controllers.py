@@ -20,6 +20,12 @@ def login():
     return render_template('login.html', error=error)
 
 
+@member.route('/logout/', methods=['GET'])
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('index'))
+
+
 @member.route('/register/', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
