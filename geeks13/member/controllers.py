@@ -1,17 +1,12 @@
-from flask import render_template, request, flash, session, redirect, url_for
+from flask import Blueprint, flash, redirect, request, session, render_template, url_for
 
-from geeks13 import app, db
 from geeks13.forms import RegistrationForm
-from geeks13.models import Post, User
+from geeks13.models import User, db
+
+member = Blueprint('member', __name__, template_folder='templates')
 
 
-@app.route('/')
-def index():
-    posts = Post.query.all()
-    return render_template('index.html', posts=posts)
-
-
-@app.route('/login', methods=['POST', 'GET'])
+@member.route('/login/', methods=['POST', 'GET'])
 def login():
     error = None
     if request.method == 'POST':
@@ -25,7 +20,7 @@ def login():
     return render_template('login.html', error=error)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@member.route('/register/', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -34,5 +29,5 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Thanks for registering')
-        return redirect(url_for('login'))
+        return redirect(url_for('member.login'))
     return render_template('register.html', form=form)
