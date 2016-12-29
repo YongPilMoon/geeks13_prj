@@ -1,10 +1,13 @@
+import sys
 import unittest
+from os import path
 
 from flask import Flask
 from flask_testing import TestCase
 
+sys.path.append( path.dirname( path.dirname( path.abspath(__file__) ) ) )
+from geeks13 import User
 from geeks13 import db
-from geeks13.models import User
 
 
 class BaseTest(TestCase):
@@ -26,7 +29,8 @@ class BaseTest(TestCase):
 
 
 class UserTest(BaseTest):
-    def test_something(self):
+    def test_signup(self):
+        response = self.client.get("/register")
         user = User('lily', 'lily@gail.com')
         db.session.add(user)
         db.session.commit()
